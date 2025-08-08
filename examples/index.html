@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visulisation Library Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .controls {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        select, input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visulisation Library Examples</h1>
+        
+        <div class="controls">
+            <h3>Controls</h3>
+            <button onclick="toggleTheme()">Toggle Theme</button>
+            <button onclick="updateData()">Update Data</button>
+            <button onclick="exportCharts()">Export Charts</button>
+            <select id="colorPalette" onchange="changeColors()">
+                <option value="default">Default Colors</option>
+                <option value="vibrant">Vibrant</option>
+                <option value="pastel">Pastel</option>
+                <option value="warm">Warm</option>
+                <option value="cool">Cool</option>
+            </select>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-container">
+                <div class="chart-title">Line Chart</div>
+                <div id="line-chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Bar Chart</div>
+                <div id="bar-chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Pie Chart</div>
+                <div id="pie-chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Scatter Plot</div>
+                <div id="scatter-plot"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { LineChart, BarChart, PieChart, ScatterPlot } from '../dist/index.js';
+
+        // Sample data
+        const lineData = [
+            { x: 1, y: 10 },
+            { x: 2, y: 20 },
+            { x: 3, y: 15 },
+            { x: 4, y: 25 },
+            { x: 5, y: 30 },
+            { x: 6, y: 22 }
+        ];
+
+        const barData = [
+            { label: 'Jan', value: 100 },
+            { label: 'Feb', value: 150 },
+            { label: 'Mar', value: 200 },
+            { label: 'Apr', value: 180 },
+            { label: 'May', value: 250 },
+            { label: 'Jun', value: 220 }
+        ];
+
+        const pieData = [
+            { label: 'Red', value: 30 },
+            { label: 'Blue', value: 25 },
+            { label: 'Green', value: 45 }
+        ];
+
+        const scatterData = [
+            { x: 1, y: 5 },
+            { x: 2, y: 8 },
+            { x: 3, y: 12 },
+            { x: 4, y: 15 },
+            { x: 5, y: 18 },
+            { x: 6, y: 22 },
+            { x: 7, y: 25 },
+            { x: 8, y: 28 }
+        ];
+
+        // Initialize charts
+        let lineChart = new LineChart('#line-chart', {
+            data: lineData,
+            width: 500,
+            height: 300,
+            title: 'Sales Trend',
+            xAxis: { label: 'Month' },
+            yAxis: { label: 'Sales' },
+            smooth: true,
+            area: true,
+            onPointClick: (point) => {
+                console.log('Line chart point clicked:', point);
+            }
+        });
+
+        let barChart = new BarChart('#bar-chart', {
+            data: barData,
+            width: 500,
+            height: 300,
+            title: 'Monthly Revenue',
+            xAxis: { label: 'Month' },
+            yAxis: { label: 'Revenue ($)' },
+            showValues: true,
+            onPointClick: (point) => {
+                console.log('Bar chart point clicked:', point);
+            }
+        });
+
+        let pieChart = new PieChart('#pie-chart', {
+            data: pieData,
+            width: 400,
+            height: 300,
+            title: 'Color Distribution',
+            showPercentages: true,
+            onPointClick: (point) => {
+                console.log('Pie chart point clicked:', point);
+            }
+        });
+
+        let scatterPlot = new ScatterPlot('#scatter-plot', {
+            data: scatterData,
+            width: 500,
+            height: 300,
+            title: 'Data Correlation',
+            xAxis: { label: 'X Value' },
+            yAxis: { label: 'Y Value' },
+            showTrendLine: true,
+            onPointClick: (point) => {
+                console.log('Scatter plot point clicked:', point);
+            }
+        });
+
+        // Global functions for controls
+        window.toggleTheme = function() {
+            const currentTheme = lineChart.options.theme === 'light' ? 'dark' : 'light';
+            lineChart.updateOptions({ theme: currentTheme });
+            barChart.updateOptions({ theme: currentTheme });
+            pieChart.updateOptions({ theme: currentTheme });
+            scatterPlot.updateOptions({ theme: currentTheme });
+        };
+
+        window.updateData = function() {
+            // Generate new random data
+            const newLineData = Array.from({ length: 6 }, (_, i) => ({
+                x: i + 1,
+                y: Math.floor(Math.random() * 50) + 10
+            }));
+
+            const newBarData = Array.from({ length: 6 }, (_, i) => ({
+                label: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'][i],
+                value: Math.floor(Math.random() * 300) + 50
+            }));
+
+            lineChart.updateData(newLineData);
+            barChart.updateData(newBarData);
+        };
+
+        window.exportCharts = function() {
+            lineChart.exportPNG();
+            barChart.exportPNG();
+            pieChart.exportPNG();
+            scatterPlot.exportPNG();
+        };
+
+        window.changeColors = function() {
+            const palette = document.getElementById('colorPalette').value;
+            const colors = getColors(palette, 6);
+            
+            lineChart.updateOptions({ colors });
+            barChart.updateOptions({ colors });
+            pieChart.updateOptions({ colors });
+            scatterPlot.updateOptions({ colors });
+        };
+
+        function getColors(palette, count) {
+            const palettes = {
+                default: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'],
+                vibrant: ['#ff4757', '#2ed573', '#3742fa', '#ffa502', '#ff6348', '#5352ed'],
+                pastel: ['#ffb3ba', '#baffc9', '#bae1ff', '#ffffba', '#ffb3d9', '#d4b3ff'],
+                warm: ['#ff6b6b', '#ff8e53', '#ffa726', '#ffcc02', '#ffeb3b', '#fff176'],
+                cool: ['#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a']
+            };
+            return palettes[palette] || palettes.default;
+        }
+    </script>
+</body>
+</html>
