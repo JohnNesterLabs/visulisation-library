@@ -1,13 +1,22 @@
 {
-  "name": "visulisation-library",
+  "name": "visualization-library",
   "version": "1.0.0",
   "description": "A modern visualization library for creating beautiful charts and graphs",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "sideEffects": false,
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc",
@@ -15,7 +24,8 @@
     "test": "jest",
     "lint": "eslint src --ext .ts",
     "clean": "rimraf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepack": "npm run build"
   },
   "keywords": [
     "visualization",
@@ -23,18 +33,23 @@
     "graphs",
     "d3",
     "react",
-    "typescript"
+    "typescript",
+    "bar-chart",
+    "line-chart",
+    "pie-chart",
+    "scatter-plot",
+    "data-visualization"
   ],
   "author": "John Horo",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/visulisation-library.git"
+    "url": "https://github.com/JohnNesterLabs/visualization-library.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/visulisation-library/issues"
+    "url": "https://github.com/JohnNesterLabs/visualization-library/issues"
   },
-  "homepage": "https://github.com/yourusername/visulisation-library#readme",
+  "homepage": "https://github.com/JohnNesterLabs/visualization-library#readme",
   "devDependencies": {
     "@types/d3": "^7.4.3",
     "@types/jest": "^29.5.0",
@@ -61,5 +76,8 @@
     "react-dom": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

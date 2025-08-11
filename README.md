@@ -1,4 +1,4 @@
-# Visulisation Library
+# Visualization Library
 
 A modern, lightweight visualization library for creating beautiful charts and graphs in JavaScript/TypeScript applications.
 
@@ -15,13 +15,13 @@ A modern, lightweight visualization library for creating beautiful charts and gr
 ## Installation
 
 ```bash
-npm install visulisation-library
+npm install @JohnNesterLabs/visualization-library
 ```
 
 or
 
 ```bash
-yarn add visulisation-library
+yarn add @JohnNesterLabs/visualization-library
 ```
 
 ## Quick Start
@@ -29,7 +29,7 @@ yarn add visulisation-library
 ### Basic Usage
 
 ```javascript
-import { LineChart, BarChart, PieChart } from 'visulisation-library';
+import { LineChart, BarChart, PieChart } from '@JohnNesterLabs/visualization-library
 
 // Create a line chart
 const lineChart = new LineChart('#chart-container', {
@@ -67,10 +67,13 @@ const pieChart = new PieChart('#pie-container', {
 ### React Usage
 
 ```jsx
-import React from 'react';
-import { LineChart } from 'visulisation-library';
+import React, { useEffect, useRef } from 'react';
+import { LineChart } from '@JohnNesterLabs/visualization-library
 
 function App() {
+  const chartRef = useRef(null);
+  const chartInstance = useRef(null);
+
   const chartData = [
     { x: 1, y: 10 },
     { x: 2, y: 20 },
@@ -78,16 +81,22 @@ function App() {
     { x: 4, y: 25 }
   ];
 
+  useEffect(() => {
+    if (chartRef.current && !chartInstance.current) {
+      chartInstance.current = new LineChart(chartRef.current, {
+        data: chartData,
+        width: 600,
+        height: 400,
+        title: 'Sales Data',
+        theme: 'dark'
+      });
+    }
+  }, []);
+
   return (
     <div>
       <h1>My Visualization</h1>
-      <LineChart
-        data={chartData}
-        width={600}
-        height={400}
-        title="Sales Data"
-        theme="dark"
-      />
+      <div ref={chartRef} />
     </div>
   );
 }
@@ -107,8 +116,9 @@ const lineChart = new LineChart(container, {
   yAxis: { label: 'Value' },
   theme: 'light' | 'dark',
   colors: ['#ff6b6b', '#4ecdc4'],
-  showGrid: true,
-  showLegend: true
+  showArea: true,
+  showPoints: true,
+  smooth: true
 });
 ```
 
@@ -271,4 +281,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-If you have any questions or need help, please open an issue on GitHub or contact us at support@visulisation-library.com.
+If you have any questions or need help, please open an issue on GitHub.
