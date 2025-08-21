@@ -1,7 +1,7 @@
 {
   "name": "@johnhoro/visualization-library",
   "version": "1.0.1",
-  "description": "A modern visualization library for creating beautiful charts and graphs",
+  "description": "A modern Sankey diagram visualization library for creating beautiful flow charts",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,16 +28,13 @@
     "prepack": "npm run build"
   },
   "keywords": [
+    "sankey-diagram",
+    "flow-chart",
+    "data-flow",
     "visualization",
-    "charts",
-    "graphs",
     "d3",
     "react",
     "typescript",
-    "bar-chart",
-    "line-chart",
-    "pie-chart",
-    "scatter-plot",
     "data-visualization"
   ],
   "author": "John Horo",
@@ -69,8 +66,8 @@
     "d3": "^7.8.0"
   },
   "peerDependencies": {
-    "react": ">=18.0.0 <20.0.0",
-    "react-dom": ">=18.0.0 <20.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "peerDependenciesMeta": {
     "react": {

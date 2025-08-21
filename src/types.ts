@@ -1,45 +1,51 @@
+// Remove the chart-specific types and keep only what's needed for SankeyVisualization
+
 export interface ChartOptions {
   width?: number;
   height?: number;
   title?: string;
-  theme?: ChartTheme | string;
-  colors?: string[];
-  animate?: boolean;
-  responsive?: boolean;
-  onPointClick?: (point: any) => void;
-  onChartClick?: (event: any) => void;
-}
-
-export interface ChartData {
-  [key: string]: any;
+  theme?: ChartTheme;
 }
 
 export interface ChartTheme {
-  background: string;
-  text: string;
-  grid: string;
-  primary: string;
-  secondary: string;
-  accent: string;
-  border: string;
-  shadow: string;
+  background?: string;
+  text?: string;
+  grid?: string;
+  primary?: string;
+  secondary?: string;
 }
 
-export interface AxisOptions {
-  label?: string;
-  showGrid?: boolean;
-  showTicks?: boolean;
-  tickFormat?: (value: any) => string;
+// Add Sankey-specific types if not already defined
+export interface Node {
+  id: string;
+  name: string;
+  value: number;
+  type: "source" | "middle" | "target";
+  color: string;
+  x: number;
+  y: number;
 }
 
-export interface LegendOptions {
-  show?: boolean;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-  orientation?: 'horizontal' | 'vertical';
+export interface Link {
+  source: string;
+  target: string;
+  value: number;
 }
 
-export interface AnimationOptions {
-  duration?: number;
-  easing?: string;
-  delay?: number;
+export interface SankeyData {
+  nodes: Node[];
+  links: Link[];
+}
+
+export interface Statistics {
+  trendGoods: number;
+  shoppingViews: number;
+  storeDynamics: number;
+}
+
+export interface Margin {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
 }
