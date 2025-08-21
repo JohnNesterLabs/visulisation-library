@@ -16,7 +16,9 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDeclarationOnly": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": [
     "src/**/*"
