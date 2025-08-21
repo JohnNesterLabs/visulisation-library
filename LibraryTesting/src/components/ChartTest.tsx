@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BarChart, LineChart, PieChart, ScatterPlot } from 'visualization-library';
+import { BarChart, LineChart, PieChart, ScatterPlot } from '@johnhoro/visualization-library';
 
 interface ChartData {
   label: string;

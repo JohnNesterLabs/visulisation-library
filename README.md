@@ -15,13 +15,13 @@ A modern, lightweight visualization library for creating beautiful charts and gr
 ## Installation
 
 ```bash
-npm install @JohnNesterLabs/visualization-library
+npm install @johnhoro/visualization-library
 ```
 
 or
 
 ```bash
-yarn add @JohnNesterLabs/visualization-library
+yarn add @johnhoro/visualization-library
 ```
 
 ## Quick Start
@@ -29,7 +29,7 @@ yarn add @JohnNesterLabs/visualization-library
 ### Basic Usage
 
 ```javascript
-import { LineChart, BarChart, PieChart } from '@JohnNesterLabs/visualization-library
+import { LineChart, BarChart, PieChart } from '@johnhoro/visualization-library'
 
 // Create a line chart
 const lineChart = new LineChart('#chart-container', {
@@ -68,7 +68,7 @@ const pieChart = new PieChart('#pie-container', {
 
 ```jsx
 import React, { useEffect, useRef } from 'react';
-import { LineChart } from '@JohnNesterLabs/visualization-library
+import { LineChart } from '@johnhoro/visualization-library'
 
 function App() {
   const chartRef = useRef(null);

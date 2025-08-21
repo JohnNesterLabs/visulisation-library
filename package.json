@@ -1,5 +1,5 @@
 {
-  "name": "visualization-library",
+  "name": "@johnhoro/visualization-library",
   "version": "1.0.0",
   "description": "A modern visualization library for creating beautiful charts and graphs",
   "main": "dist/index.js",
@@ -54,10 +54,13 @@
     "@types/d3": "^7.4.3",
     "@types/jest": "^29.5.0",
     "@types/node": "^20.0.0",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.0.0",
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "^30.0.5",
     "rimraf": "^5.0.0",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.0"
