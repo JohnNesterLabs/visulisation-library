@@ -107,8 +107,8 @@ function App() {
           data={sankeyData}
           width={1200}
           height={800}
-          showTimeFilter={true}
-          showStatistics={true}
+          showTimeFilter={false}
+          // showStatistics={true}
           useCustomFlowWidth={false}
           onFilterChange={(filter) => console.log('Filter changed:', filter)}
         />

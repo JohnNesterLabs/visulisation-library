@@ -86,7 +86,7 @@ const SankeyVisualization: React.FC<SankeyVisualizationProps> = ({
   flowWidthMultiplier = 1,
 
   // Statistics props
-  showStatistics = true,
+  showStatistics = false,
   statistics = {
     trendGoods: 204,
     shoppingViews: 65540,
@@ -364,8 +364,76 @@ const SankeyVisualization: React.FC<SankeyVisualizationProps> = ({
 
     drawLinks();
 
+    // Add zoom control buttons (not affected by zoom)
+    const zoomControlsGroup = svg.append("g").attr("class", "zoom-controls");
+    
+    const buttonWidth = 100;
+    const buttonHeight = 36;
+    const buttonSpacing = 8;
+    const controlsX = width - buttonWidth - 20;
+    const controlsY = 20;
+    
+    const zoomButtons = [
+      { text: "Zoom In", action: "zoomIn" },
+      { text: "Zoom Out", action: "zoomOut" },
+      { text: "Reset Zoom", action: "resetZoom" }
+    ];
+    
+    zoomButtons.forEach((button, i) => {
+      const buttonY = controlsY + i * (buttonHeight + buttonSpacing);
+      
+      // Button background
+      zoomControlsGroup
+        .append("rect")
+        .attr("x", controlsX)
+        .attr("y", buttonY)
+        .attr("width", buttonWidth)
+        .attr("height", buttonHeight)
+        .attr("rx", 6)
+        .attr("fill", "rgba(255, 255, 255, 0.9)")
+        .attr("stroke", "rgba(255, 255, 255, 0.2)")
+        .attr("stroke-width", 1)
+        .style("cursor", "pointer")
+        .on("mouseover", function() {
+          d3.select(this).attr("fill", "rgba(255, 255, 255, 1)");
+        })
+        .on("mouseout", function() {
+          d3.select(this).attr("fill", "rgba(255, 255, 255, 0.9)");
+        })
+        .on("click", () => {
+          switch(button.action) {
+            case "zoomIn":
+              handleZoomIn();
+              break;
+            case "zoomOut":
+              handleZoomOut();
+              break;
+            case "resetZoom":
+              handleResetZoom();
+              break;
+          }
+        });
+      
+      // Button text
+      zoomControlsGroup
+        .append("text")
+        .attr("x", controlsX + buttonWidth / 2)
+        .attr("y", buttonY + buttonHeight / 2 + 4)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-weight", "600")
+        .style("fill", "#1a1a3e")
+        .style("pointer-events", "none")
+        .text(button.text);
+    });
+
     // Add fixed statistics panel (not affected by zoom)
-    if (showStatistics) {
+    console.log('showStatistics value:', showStatistics); // Debug log
+    
+    // Remove any existing statistics panel first
+    svg.selectAll(".stats-panel").remove();
+    
+    if (showStatistics === true) {
       const statsGroup = svg.append("g").attr("class", "stats-panel");
 
       // Background for stats panel
@@ -531,28 +599,6 @@ const SankeyVisualization: React.FC<SankeyVisualizationProps> = ({
           ))}
         </div>
       )}
-
-      {/* Zoom Buttons */}
-      <div className="space-x-4 z-0">
-        <button
-          onClick={handleZoomIn}
-          className="bg-white text-black px-4 py-2 rounded shadow hover:bg-gray-100 transition-colors"
-        >
-          Zoom In
-        </button>
-        <button
-          onClick={handleZoomOut}
-          className="bg-white text-black px-4 py-2 rounded shadow hover:bg-gray-100 transition-colors"
-        >
-          Zoom Out
-        </button>
-        <button
-          onClick={handleResetZoom}
-          className="bg-white text-black px-4 py-2 rounded shadow hover:bg-gray-100 transition-colors"
-        >
-          Reset Zoom
-        </button>
-      </div>
 
       {/* Chart */}
       <svg ref={svgRef} className="max-w-full max-h-full"></svg>
