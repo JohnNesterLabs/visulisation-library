@@ -1,5 +1,6 @@
 // Main exports - only SankeyVisualization
 export { default as SankeyVisualization } from './charts/Shanky';
+export { default as ShankyPro } from "./charts/ShankyPro/ShankyPro";
 
 // Types
 export type { ChartOptions, ChartTheme } from './types';
