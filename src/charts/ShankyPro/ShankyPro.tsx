@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
-import styles from "./SankeyChart.module.css";
+// Removed CSS module import - using Tailwind classes instead
 
 // Dynamic positioning configuration
 const POSITION_CONFIG = {
@@ -290,7 +290,7 @@ interface CustomSankeyProps {
   windowSize?: { width: number; height: number };
 }
 
-export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, height: 0 } }: CustomSankeyProps) => {
+const ShankyPro = ({ flows, curvature = 0.5, windowSize = { width: 0, height: 0 } }: CustomSankeyProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -490,21 +490,13 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("flood-opacity", 0.12);
 
     // Create tooltip div - check if it already exists to avoid duplicates
-    let tooltip: any = d3.select("body").select(`.${styles.tooltip}`);
+    let tooltip: any = d3.select("body").select(".sankey-tooltip");
     if (tooltip.empty()) {
       tooltip = d3
         .select("body")
         .append("div")
-        .attr("class", styles.tooltip)
-        .style("opacity", 0)
-        .style("position", "absolute")
-        .style("background", "rgba(0, 0, 0, 0.8)")
-        .style("color", "white")
-        .style("padding", "8px 12px")
-        .style("border-radius", "6px")
-        .style("font-size", "12px")
-        .style("pointer-events", "none")
-        .style("z-index", "1000");
+        .attr("class", "sankey-tooltip absolute bg-black bg-opacity-80 text-white px-3 py-2 rounded-md text-xs pointer-events-none z-50 shadow-lg border border-white border-opacity-20")
+        .style("opacity", 0);
     }
 
     // Filter flows by type and apply responsive positioning
@@ -688,7 +680,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("fill", `url(#gradient-${flow.id})`)
         .attr("stroke", "rgba(255, 255, 255, 0.1)") // Subtle white stroke for definition
         .attr("stroke-width", "0.5")
-        .attr("class", styles["flow-path"])
+        .style("opacity", "0.6")
+        .style("transition", "opacity 0.3s, stroke 0.3s")
+        .style("cursor", "pointer")
         .attr("data-flow-id", flow.id)
         .style("opacity", 0.8) // Default opacity
         .on("mouseover", function (event, d) {
@@ -748,7 +742,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("fill", `url(#source-gradient-${flow.id})`)
         .attr("stroke", "rgba(255, 255, 255, 0.1)") // Subtle white stroke for definition
         .attr("stroke-width", "0.5")
-        .attr("class", styles["flow-path"])
+        .style("opacity", "0.6")
+        .style("transition", "opacity 0.3s, stroke 0.3s")
+        .style("cursor", "pointer")
         .attr("data-flow-id", flow.id)
         .style("opacity", 0.6) // Reduced opacity for better intersection blending
         .style("mix-blend-mode", "multiply") // Add blending mode for intersection effects
@@ -820,7 +816,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", flow.target.y - flow.target.width / 2)
         .attr("width", nodeWidth)
         .attr("height", flow.target.width)
-        .attr("class", styles["node-rect"]);
+        .style("fill", "#642CFD")
+        .style("rx", "3")
+        .style("ry", "3");
     });
 
     // Target nodes and labels for source flows
@@ -840,7 +838,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", flow.source.y - 10)
         .attr("text-anchor", "end")
         .attr("dominant-baseline", "middle")
-        .attr("class", styles["source-label"])
+        .style("font-size", "12px")
+        .style("fill", "#5B5B5B")
+        .style("font-weight", "500")
         .style("font-size", `${fontSize}px`)
         .text(flow.sourceLabel || '');
 
@@ -851,7 +851,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", flow.source.y + 8)
         .attr("text-anchor", "end")
         .attr("dominant-baseline", "middle")
-        .attr("class", styles["source-value"])
+        .style("font-size", "11px")
+        .style("fill", "black")
+        .style("font-weight", "600")
         .style("font-size", `${fontSize - 2}px`)
         .text(flow.sourceValue !== undefined ? flow.sourceValue : '');
 
@@ -862,7 +864,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", flow.target.y - flow.target.width / 2)
         .attr("width", nodeWidth-3)
         .attr("height", flow.target.width)
-        .attr("class", styles["node-rect"]);
+        .style("fill", "#642CFD")
+        .style("rx", "3")
+        .style("ry", "3");
     });
 
     // Create cards on the right side - responsive design
@@ -928,7 +932,10 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("ry", 12 * scale)
       .attr("fill", "white")
       .attr("filter", "url(#cardShadow)")
-      .attr("class", styles["info-card"]);
+      .style("fill", "white")
+      .style("rx", "8")
+      .style("ry", "8")
+      .style("filter", "drop-shadow(0px 4px 40px rgba(112, 144, 176, 0.12))");
 
     // Total Detections Card Content - responsive text
     // Title with icon
@@ -938,7 +945,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY1 + padding.top + 8)
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-title"])
+      .style("font-size", "16px")
+      .style("fill", "#131313")
+      .style("font-weight", "500")
       .style("font-size", `${cardFontSize.title}px`)
       .style("font-weight", "500") 
       .text("Total Detections");
@@ -950,7 +959,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY1 + padding.top + 8) // Same Y as title
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-icon"])
+      .style("font-size", "16px")
+      .style("fill", "#8B5FBF")
+      .style("font-weight", "600")
       .style("font-size", "14px")
       .style("fill", "#8B5FBF")
       .text("↗");
@@ -962,7 +973,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY1 + padding.top + 8 + gap + 16) // Adjusted for 24px top padding
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-value"])
+      .style("font-size", "16px")
+      .style("fill", "#131313")
+      .style("font-weight", "500")
       .style("font-size", "24px")
       .style("font-weight", "700")
       .style("fill", "#131313")
@@ -975,7 +988,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY1 + padding.top + 8 + gap + 16) // Same Y as main value
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-trend"])
+      .style("font-size", "12px")
+      .style("fill", "#059669")
+      .style("font-weight", "500")
       .style("font-size", "14px")
       .style("font-weight", "500")
       .style("fill", "#059669")
@@ -988,7 +1003,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY1 + padding.top + 8 + gap + 16 + gap + 12) // Adjusted for 24px top padding
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-subtitle"])
+      .style("font-size", "11px")
+      .style("fill", "#6B7280")
+      .style("font-weight", "400")
       .style("font-size", "14px")
       .style("font-weight", "400")
       .style("fill", "#6B7280")
@@ -1005,7 +1022,10 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("ry", 12)
       .attr("fill", "white")
       .attr("filter", "url(#cardShadow)")
-      .attr("class", styles["info-card"]);
+      .style("fill", "white")
+      .style("rx", "8")
+      .style("ry", "8")
+      .style("filter", "drop-shadow(0px 4px 40px rgba(112, 144, 176, 0.12))");
 
     // Mitigated Threats Card Content - using design padding and gap
     // Title
@@ -1015,7 +1035,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY2 + padding.top + 16) // Using 24px top padding
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-title"])
+      .style("font-size", "16px")
+      .style("fill", "#131313")
+      .style("font-weight", "500")
       .text("Mitigated Threats");
     
     // Value (right-aligned)
@@ -1025,7 +1047,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", cardY2 + padding.top + 16) // Same y as title
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-value"])
+      .style("font-size", "16px")
+      .style("fill", "#131313")
+      .style("font-weight", "500")
       .text("9000");
 
     // Threat breakdown with proper spacing using design gap
@@ -1046,7 +1070,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", yPos)
         .attr("text-anchor", "start")
         .attr("dominant-baseline", "middle")
-        .attr("class", styles["threat-label"])
+        .style("font-size", "14px")
+        .style("fill", "#5B5B5B")
+        .style("font-weight", "500")
         .text(threat.label);
       
       // Value
@@ -1056,7 +1082,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", yPos) // Same Y position as label - they stay on the same line
         .attr("text-anchor", "end")
         .attr("dominant-baseline", "middle")
-        .attr("class", styles["threat-value"])
+        .style("font-size", "14px")
+        .style("fill", "#5B5B5B")
+        .style("font-weight", "500")
         .text(threat.value);
     });
 
@@ -1070,7 +1098,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", unmitigatedTitleY)
       .attr("text-anchor", "start")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-title"])
+      .style("font-size", "16px")
+      .style("fill", "#131313")
+      .style("font-weight", "500")
       .text("Unmitigated Threats");
     
     // Value (right-aligned)
@@ -1080,7 +1110,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
       .attr("y", unmitigatedTitleY)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .attr("class", styles["card-value"])
+      .style("font-size", "16px")
+      .style("fill", "#131313")
+      .style("font-weight", "500")
       .text("100");
 
     // Unmitigated threat breakdown
@@ -1098,7 +1130,9 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", yPos)
         .attr("text-anchor", "start")
         .attr("dominant-baseline", "middle")
-        .attr("class", styles["threat-label"])
+        .style("font-size", "14px")
+        .style("fill", "#5B5B5B")
+        .style("font-weight", "500")
         .text(threat.label);
       
       // Value
@@ -1108,14 +1142,16 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
         .attr("y", yPos) // Same Y position as label - they stay on the same line
         .attr("text-anchor", "end")
         .attr("dominant-baseline", "middle")
-        .attr("class", styles["threat-value"])
+        .style("font-size", "14px")
+        .style("fill", "#5B5B5B")
+        .style("font-weight", "500")
         .text(threat.value);
     });
 
     // Cleanup function to remove tooltip when component unmounts
     return () => {
       if (typeof window !== 'undefined') {
-        d3.select("body").selectAll(`.${styles.tooltip}`).remove();
+        d3.select("body").selectAll(".sankey-tooltip").remove();
       }
     };
   }, [flows, curvature, svgRef]); // Rerun effect when flows, curvature, or window size change
@@ -1123,3 +1159,4 @@ export const CustomSankey = ({ flows, curvature = 0.5, windowSize = { width: 0, 
   return <svg id="sankey-chart" ref={svgRef}></svg>;
 };
 
+export default ShankyPro;
