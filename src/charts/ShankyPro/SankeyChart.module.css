@@ -1,0 +1,252 @@
+/* SankeyChart.module.css */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: white;
+    min-height: 100vh;
+  }
+  
+  .h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 300;
+  }
+  
+  .controls {
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .control-group label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  .controls input[type='range'] {
+    width: 120px;
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+  }
+  
+  .controls input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #8b5fbf;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .controls input[type='range']::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #8b5fbf;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .controls button {
+    padding: 8px 16px;
+    background: #8b5fbf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+  }
+  
+  .controls button:hover {
+    background: #7a4fb0;
+  }
+  
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  width: 100%;
+  overflow: visible;
+  padding: 10px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .chart-container {
+    min-height: 400px;
+    padding: 5px;
+  }
+  
+  .container {
+    padding: 15px;
+    margin: 10px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .chart-container {
+    min-height: 450px;
+    padding: 8px;
+  }
+  
+  .container {
+    padding: 20px;
+    margin: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .chart-container {
+    min-height: 500px;
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 30px;
+    margin: 20px;
+  }
+}
+  
+  .node-label {
+    font-size: 14px;
+    fill: #333;
+    font-weight: 500;
+  }
+  
+  .tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 200px;
+    line-height: 1.4;
+  }
+
+  .flow-path {
+    /* fill: #8b5fbf; */
+    opacity: 0.6;
+    transition: opacity 0.3s, stroke 0.3s;
+    cursor: pointer;
+  }
+  
+  .flow-path:hover {
+    opacity: 0.9;
+  }
+  
+  .node-rect {
+    fill: #642CFD;
+    rx: 3;
+    ry: 3;
+  }
+
+  .source-label {
+    font-size: 12px;
+    fill: #5B5B5B;
+    font-weight: 500;
+  }
+
+  .source-value {
+    font-size: 11px;
+    fill: black;
+    font-weight: 600;
+  }
+
+  .info-card {
+    fill: white;
+    /* stroke: #E5E7EB; */
+    /* stroke-width: 1; */
+    rx: 8;
+    ry: 8;
+    /* box-shadow: 0px 4px 40px 0px #7090B01F; */
+    box-shadow: 0px 4px 40px 0px #7090B01F;
+    background: #FFFFFF;
+  }
+
+  .card-title {
+    font-size: 16px;
+    fill: #131313;
+    font-weight: 500;
+  }
+
+  .card-value {
+    font-size: 16px;
+    fill: #131313;
+    font-weight: 500;
+  }
+
+  .card-trend {
+    font-size: 12px;
+    fill: #059669;
+    font-weight: 500;
+  }
+
+  .card-subtitle {
+    font-size: 11px;
+    fill: #6B7280;
+    font-weight: 400;
+  }
+
+  .threat-item {
+    font-size: 12px;
+    fill: #374151;
+    font-weight: 500;
+  }
+
+  .target-node {
+    fill: #8B5FBF;
+    rx: 3;
+    ry: 3;
+  }
+
+  .card-icon {
+    font-size: 16px;
+    fill: #8B5FBF;
+    font-weight: 600;
+  }
+
+  .threat-label {
+    font-size: 14px;
+    fill: #5B5B5B;
+    font-weight: 500;
+  }
+
+  .threat-value {
+    font-size: 14px;
+    fill: #5B5B5B;
+    font-weight: 500;
+  }
