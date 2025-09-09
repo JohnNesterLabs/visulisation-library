@@ -12,7 +12,7 @@ import {
 const RESPONSIVE_CONFIG = {
   desktop: { width: 500, height: 400, outerRadius: "80%" },
   tablet: { width: 400, height: 320, outerRadius: "75%" },
-  mobile: { width: 350, height: 250, outerRadius: "70%" },
+  mobile: { width: window.innerWidth - 40, height: 250, outerRadius: "70%" },
 };
 
 const getResponsiveConfig = () => {
@@ -35,7 +35,7 @@ export default function ThreatRadar({ data, colors }) {
   }, []);
 
   return (
-    <div className="bg-[#F8F6FF] rounded-2xl p-6 flex justify-center">
+    <div className="bg-[#F8F6FF] rounded-2xl p-4 sm:p-6 flex justify-center w-full max-w-full overflow-x-auto">
       <RadarChart
         cx="50%"
         cy="50%"
@@ -68,7 +68,7 @@ export default function ThreatRadar({ data, colors }) {
           verticalAlign="bottom"
           align="center"
           iconType="circle"
-          wrapperStyle={{ marginTop: "20px" }} // recharts requires inline
+          wrapperStyle={{ marginTop: "20px" }}
         />
       </RadarChart>
     </div>
